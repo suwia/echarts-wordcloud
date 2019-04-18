@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+    <title>demo</title>
+    <script src="./jquery-1.11.3.min.js" type="text/javascript"></script>
+    <script src="./tagcanvas.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        window.onload = function () {
+            try {
+                var i, et = document.getElementById('tags').childNodes;
+                for (i in et) {
+                    et[i].nodeName == 'A' && et[i].addEventListener('mouseover', function (e) {
+                        e.preventDefault();
+                        alert("干哈");
+                    });
+                }
+
+                TagCanvas.Start('myCanvas', 'tags', {
+                    textColour: '#222',
+                    outlineColour: 'red',
+                    reverse: true,
+                    depth: 0.8,
+                    dragControl: true,
+                    decel: 0.95,
+                    maxSpeed: 0.05,
+                    initial: [-0.2, 0]
+                });
+            } catch (e) {
+                // something went wrong, hide the canvas container
+                //document.getElementById('myCanvasContainer').style.display = 'none';
+            }
+        };
+    </script>
+
+</head>
+
+<body>
+
+<div style="text-align:center">
+
+    <canvas height="500" id="myCanvas" style="" width="600"></canvas>
+
+    <div id="tags" style="display: none;">
+        <a href="http://www.baidu.com" target="_blank">爱</a>
+        <a href="http://www.baidu.com" target="_blank">承诺</a>
+        <a href="http://www.baidu.com" target="_blank">轻时尚</a>
+        <a href="http://www.baidu.com" target="_blank">简约</a>
+        <a href="http://www.baidu.com" target="_blank">科技</a>
+        <a href="http://www.baidu.com" target="_blank">美丽</a>
+        <a href="http://www.baidu.com" target="_blank">智慧</a>
+        <a href="http://www.baidu.com" target="_blank">情感</a>
+        <a href="http://www.baidu.com" target="_blank">体验</a>
+        <a href="http://www.baidu.com" target="_blank">互联网</a>
+        <a href="http://www.baidu.com" target="_blank">习近平</a>
+        <a href="http://www.baidu.com" target="_blank">李克强</a>
+        <a href="http://www.baidu.com" target="_blank">板门店</a>
+        <a href="http://www.baidu.com" target="_blank">超限</a>
+        <a href="http://www.baidu.com" target="_blank">金正恩</a>
+        <a href="http://www.baidu.com" target="_blank">文在寅</a>
+        <a href="http://www.baidu.com" target="_blank">首脑会晤</a>
+        <a href="http://www.baidu.com" target="_blank">军事演习</a>
+        <a href="http://www.baidu.com" target="_blank">国产航母</a>
+        <a href="http://www.baidu.com" target="_blank">海军节</a>
+        <a href="http://www.baidu.com" target="_blank">歼-15</a>
+        <a href="http://www.baidu.com" target="_blank">贸易战</a>
+        <a href="http://www.baidu.com" target="_blank">鸿茅药酒</a>
+        <a href="http://www.baidu.com" target="_blank">台独</a>
+        <a href="http://www.baidu.com" target="_blank">精日分子</a>
+        <a href="http://www.baidu.com" target="_blank">民族</a>
+
+
+    </div>
+
+</div>
+
+
+</body>
+</html>

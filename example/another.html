@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+<!--定义一个用来存放词云图的div 可以自己指定宽度和高度-->
+<div id = "main" style="width: 980px;height: 800px;"></div>
+<script src='../dist/echarts.simple.js'></script>
+<script src='../dist/echarts-wordcloud.js'></script>
+<script type="text/javascript">
+
+    //词云的关键词，数据格式：词语，词语大小
+    var keywords = {
+        "善解人意": 22199,
+        "小鸟依人": 10288,
+        "聪明": 620,
+        "可爱": 274470,
+        "活泼": 12311,
+        "才女": 1206,
+        "冰雪聪明": 4885,
+        "文静": 1,
+        "时髦": 3
+    };
+    var data = [];
+    //遍历关键词对象，将数据封装进data数组
+    for (var key in keywords) {
+        data.push({
+            name: key,
+            value: Math.sqrt(keywords[key])
+        })
+    }
+    console.log(data)
+
+    var maskImage = new Image();
+
+    //词云形状的黑白矢量图
+    maskImage.src = './女性.png';
+    // maskImage.src = './男性.png';
+    // maskImage.src = './企业.png';
+
+    var rgbColor = ['rgb(247,145,61)', 'rgb(28,184,183)','rgb(68,156,220)','rgb(168,143,226)','rgb(217,122,128)'];
+
+    //生成从minNum到maxNum的随机数
+    function randomNum(minNum,maxNum){
+        switch(arguments.length){
+            case 1:
+                return parseInt(Math.random()*minNum+1,10);
+                break;
+            case 2:
+                return parseInt(Math.random()*(maxNum-minNum+1)+minNum,10);
+                break;
+            default:
+                return 0;
+                break;
+        }
+    }
+
+    //echarts的配置信息
+    var option = {
+        title: {
+            text: '人物词云标签',
+            x: 'center',
+            textStyle: {
+                fontSize: 23
+            }
+
+        },
+        //背景图片
+      backgroundColor: 'url(bg_woman2.png)',
+      // backgroundColor: 'url(bg_man2.png)',
+      //   backgroundColor: 'url(bg_enterprise2.png)',
+        series: [{
+            name: '人物词云标签',
+            type: 'wordCloud',
+
+            //left/top/width/height/right/bottom 用于定位词云的位置
+            top: '10%',
+            width: '95%',
+            height: '100%',
+
+
+
+            // size: ['9%', '99%'],
+
+            //数据中的值将映射到的文本大小范围。默认为最小12px，最大60px。
+            sizeRange: [60, 150],
+            //textRotation: [0, 45, 90, -45],
+
+            //文本旋转范围和步长。文本将通过rotationStep 45在[-90,90]范围内随机旋转
+            rotationRange: [-45, 90],
+            // rotationStep: 45,
+
+            //词云的形状
+            //shape: 'circle',
+
+            //词云的形状，根据所选的黑白矢量图来生成形状
+            maskImage: maskImage,
+
+            //用于标记画布可用性的网格大小（以像素为单位）
+            //网格大小越大，单词之间的差距越大。
+            //gridSize: 8,
+
+            //设置为true以允许在画布之外部分绘制单词。
+            //允许大于要绘制的画布大小的单词
+            drawOutOfBound: false,
+
+            textPadding: 0,
+            autoSize: {
+                enable: true,
+                minSize: 30
+            },
+
+            //全局文字样式
+            textStyle: {
+                //字体样式
+                fontFamily: 'Microsoft YaHei',
+
+                //字体宽度
+                fontWeight: 'bold',
+
+                //普通文字样式
+                normal: {
+                   // fontSize: '20px',
+                    color: function() {
+                        //随机颜色
+                        /*return 'rgb(' + [
+                            Math.round(Math.random() * 160),
+                            Math.round(Math.random() * 160),
+                            Math.round(Math.random() * 160)
+                        ].join(',') + ')';*/
+
+                        //从指定的颜色数组随机筛选颜色出来
+                        return rgbColor[randomNum(0,4)];
+                    }
+                },
+
+                //重点文字样式，当鼠标指针在此单词上的样式
+                emphasis: {
+                    //遮罩模糊
+                    shadowBlur: 5,
+                    //遮罩颜色
+                    shadowColor: '#333'
+                }
+            },
+
+            //数据
+            data: data
+        }]
+    };
+
+    //初始化echarts图表
+    var myChart = echarts.init(document.getElementById('main'));
+
+    maskImage.onload = function() {
+        myChart.setOption(option);
+    };
+    window.onresize = function() {
+        myChart.resize();
+    }
+</script>
+</body>
+</html>
